@@ -1,0 +1,126 @@
+{
+  "info": {
+    "name": "Farmacia API",
+    "description": "Pruebas de los endpoints de medicamentos y proveedores. Las escrituras requieren x-api-key.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "apiKey",
+      "value": "farmacia123"
+    },
+    {
+      "key": "medicamentoId",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Listar medicamentos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/medicamentos"
+      }
+    },
+    {
+      "name": "Listar proveedores",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/proveedores"
+      }
+    },
+    {
+      "name": "Obtener medicamento",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/medicamentos/{{medicamentoId}}"
+      }
+    },
+    {
+      "name": "Crear medicamento",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 201) {",
+              "  const medicamento = pm.response.json();",
+              "  pm.collectionVariables.set('medicamentoId', medicamento.id);",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "x-api-key",
+            "value": "{{apiKey}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Loratadina 10 mg\",\n  \"principioActivo\": \"Loratadina\",\n  \"precio\": 2100,\n  \"stock\": 20,\n  \"idProveedor\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/api/medicamentos"
+      }
+    },
+    {
+      "name": "Actualizar stock",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "x-api-key",
+            "value": "{{apiKey}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"stock\": 35\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/api/medicamentos/{{medicamentoId}}/stock"
+      }
+    },
+    {
+      "name": "Eliminar medicamento",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "{{apiKey}}"
+          }
+        ],
+        "url": "{{baseUrl}}/api/medicamentos/{{medicamentoId}}"
+      }
+    }
+  ]
+}

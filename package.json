@@ -1,0 +1,12 @@
+{
+  "name": "gestion-farmacia-api",
+  "version": "1.0.0",
+  "description": "API REST educativa para gestionar medicamentos y proveedores de una farmacia",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
